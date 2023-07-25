@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with WhatsApp</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fab fa-whatsapp"></i> Chat with WhatsApp</h1>
+        <p>Enter your phone number (without any '+' or '0') and a custom message, then click the button below to open WhatsApp:</p>
+        
+        <label for="phone"><i class="fas fa-phone"></i> Phone Number:</label>
+        <input type="text" id="phone" placeholder="Your phone number" required>
+        
+        <label for="message"><i class="fas fa-envelope"></i> Message:</label>
+        <input type="text" id="message" placeholder="Your message" required>
+        
+        <button onclick="openWhatsApp()"><i class="fab fa-whatsapp"></i> Open WhatsApp</button>
+    </div>
+    
+    <script>
+        function openWhatsApp() {
+            var phoneNumber = document.getElementById('phone').value;
+            var message = document.getElementById('message').value;
+            
+            // Remove any non-digit characters from the phone number
+            phoneNumber = phoneNumber.replace(/\D/g, '');
+
+            // If WhatsApp is installed, open it directly; otherwise, open WhatsApp Web in the browser.
+            var url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            var isWhatsAppInstalled = /WhatsApp/.test(navigator.userAgent);
+            if (!isWhatsAppInstalled) {
+                url = `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+            }
+
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>
